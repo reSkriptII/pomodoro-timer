@@ -1,26 +1,41 @@
-import { useState, useEffect } from 'react'
+import { useState, useRef } from 'react'
 
 export default function App() {
   const [timer, setTimer] = useState(1500); // time in second
-  const timerDisplay = Math.floor(timer / 60) + ':' + ('0' + (timer % 60)).slice(-2) ;
+  const [isRunning, setIsRunning] = useState(false);
+  const timerInterval = useRef<number>(undefined);
 
   function handleClick() {
-    const intervalId = setInterval(() => {
-      if (timer > 0) {
-        setTimer(t => t - 1);
-      } else {
-        clearInterval(intervalId);
-      }
-      
-    }, 1000);
+    let nextIsRunning = !isRunning;
+    setIsRunning(nextIsRunning);
+
+    if (nextIsRunning) {
+      timerInterval.current = setInterval(() => {
+        if (timer > 0) {
+          setTimer(t => t - 1);
+        } else {
+          clearInterval(timerInterval.current);
+        }
+      }, 1000);
+    } else {
+      clearInterval(timerInterval.current)
+    }
+    
   }
 
   return (
     <>
-      <div> {timerDisplay} </div>
-      <button onClick={handleClick} />
+      <TimerDisplay timer={timer} />
+      <button onClick={handleClick}> { isRunning? 'stop' : 'pause'} </button>
     </>
     
   )
 }
 
+function TimerDisplay({ timer }: { timer: number }) {
+  const display = Math.floor(timer / 60) + ':' + ('0' + (timer % 60)).slice(-2);
+
+  return <div>
+    { display }
+  </div>
+}

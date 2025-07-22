@@ -37,7 +37,7 @@ export default function App() {
     <div className='bg-slate-900 min-h-screen'>
       <HeaderBar />
       <div className='bg-orange-400 md:px-20 px-4 py-8 mx-auto my-8 w-fit border-x-28 border-x-yellow-400'>
-        <Timer key={stage} stage={stage} timeSetting={timeSetting} onTimeout={handleTimeout} />
+        <Timer key={stage + JSON.stringify(timeSetting)} stage={stage} timeSetting={timeSetting} onTimeout={handleTimeout} />
         <StateSelector stage={stage} onChange={setStage} />
       </div>
       <TimerSetting setting={timeSetting} onChange={handleTimeSettingChange} />

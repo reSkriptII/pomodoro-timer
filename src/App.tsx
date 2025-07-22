@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Timer } from './Timer.tsx'
-import { StateSelector } from './StateSelector.tsx';
+import { StageSelector } from './StageSelector.tsx';
 import { TimerSetting } from './TimerSetting.tsx';
 
 type stage_t = 'Pomodoro' | 'Short Break' | 'Long Break';
@@ -38,7 +38,7 @@ export default function App() {
       <HeaderBar />
       <div className='bg-orange-400 md:px-20 px-4 py-8 mx-auto my-8 w-fit border-x-28 border-x-yellow-400'>
         <Timer key={stage + JSON.stringify(timeSetting)} stage={stage} timeSetting={timeSetting} onTimeout={handleTimeout} />
-        <StateSelector stage={stage} onChange={setStage} />
+        <StageSelector stage={stage} onChange={setStage} />
       </div>
       <TimerSetting setting={timeSetting} onChange={handleTimeSettingChange} />
     </div>
@@ -58,6 +58,6 @@ function HeaderBar() {
 
 const initialTimeSetting: {[key: string]: number} = {
   Pomodoro: 1500,
-  'Short Break': 3,
+  'Short Break': 300,
   'Long Break': 600,
 }
